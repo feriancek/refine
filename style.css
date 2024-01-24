@@ -1,0 +1,153 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Futura, Poppins;
+}
+select {
+	font-family: Futura, Poppins;
+	width: 200px;
+}
+input {
+	font-family: Futura, Poppins;
+	width: 200px;
+}
+textarea {
+	font-family: Futura, Poppins;
+	height: 137px;
+	width: 400px;
+	resize: vertical;
+	max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 4rem;
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  margin: 4rem 0;
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
+.code {
+  background: #fafafa;
+  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.card {
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  max-width: 300px;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .grid {
+	width: 100%;
+	flex-direction: column;
+  }
+}
+
+#redButton {
+	background-color: red;
+	color: white;
+	border: none;
+	cursor: pointer; 
+	margin-left: 50px;
+}
+
+#redButton:hover {
+	background-color: darkred;
+}
+#logContent p {
+	margin-bottom: 5px; /* Adjust this value as needed */
+}
+
+/* Remove the annoying arrows on the number tags */
+/* Hide the arrows for WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Hide the arrows for Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+/* Hide the arrows for MS Edge and IE */
+input[type="number"]::-ms-clear,
+input[type="number"]::-ms-reveal {
+	display: none;
+}
+
+
+/* https://stackoverflow.com/questions/14524328/changing-font-family-for-placeholder 
+input::-webkit-input-placeholder {
+	  font-family: Futura,Poppins;
+}
+
+input::-moz-placeholder {
+	  font-family: Futura,Poppins;
+}
+*/
