@@ -1,147 +1,94 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refine Calculator</title>
-    <link rel="stylesheet" href="https://skeleton-framework.github.io/css/skeleton.min.css">
-    <style>
-        body {
-            font-family: 'Futura', 'Trebuchet MS', Arial, sans-serif;
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        form, #results, #contentsChart {
-            width: 100%;
-            max-height: 500px;
-            max-width: 500px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 auto;
-        }
-        input, canvas {
-            display: block;
-            margin: 10px 0;
-            width: calc(100% - 20px);
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-		h2 {
-			font-size: 2rem;
-		}
-        #results {
-			font-size: 1.2rem;
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Refine Calculator</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Refiner Batch Tracking</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="row">
-			
-            <div class="one-third column">
-                <form id="refineForm">
-                    <label for="nibsQuantity">Quantity of Nibs (kg)</label>
-                    <input type="number" id="nibsQuantity" step="0.01" min="15" max="30" value="21" oninput="updateSliderValue('nibsQuantity', 'nibsQuantitySlider')"/>
-                    <input type="range" id="nibsQuantitySlider" min="15" max="30" step="0.01" value="21" oninput="updateSliderValue('nibsQuantity', 'nibsQuantitySlider')"/>
+      <h2>Batch 101 Data</h2>
+      <div id="batchInfo" style="display: none">
+        <p>
+          <strong>Total Revolutions:</strong>
+          <span id="totalRevolutions">0</span>
+        </p>
+        <p>
+          <strong>Total Runtime:</strong>
+          <span id="totalRuntime">0 seconds</span>
+        </p>
+        <p>
+          <strong>Average Revolutions Per Minute:</strong>
+          <span id="averageRPM">0</span>
+        </p>
+      </div>
 
-                    <label for="butterQuantity">Quantity of Butter (kg)</label>
-                    <input type="number" id="butterQuantity" step="0.01" min="0" max="4" value="2" oninput="updateSliderValue('butterQuantity', 'butterQuantitySlider')"/>
-                    <input type="range" id="butterQuantitySlider" min="0" max="4" step="0.01" value="2" oninput="updateSliderValue('butterQuantity', 'butterQuantitySlider')"/>
-
-                    <label for="sugarQuantity">Quantity of Sugar (kg)</label>
-                    <input type="number" id="sugarQuantity" step="0.01" min="0" max="10" value="7.65" oninput="updateSliderValue('sugarQuantity', 'sugarQuantitySlider')"/>
-                    <input type="range" id="sugarQuantitySlider" min="0" max="10" step="0.01" value="7.65" oninput="updateSliderValue('sugarQuantity', 'sugarQuantitySlider')"/>
-                </form>
-            </div>
-			
-			<div class="one-third column">
-				<canvas id="contentsChart"></canvas>
-			</div>
-			
-            <div class="one-third column">
-                <div id="results">
-                    <h2>Results:</h2>
-                    <p>Batch weight: <span id="batchResult">0.0</span> kg</p>
-                    <p>Butter percentage: <span id="butterPercentageResult">0.0</span>%</p>
-                    <p>Sugar percentage: <span id="sugarContentResult">0.0</span>%</p>
-                    <p>Chocolate content: <span id="chocolateContentResult">0.0</span>%</p>
-                </div>
-            </div>
+      <form id="batchForm" class="row">
+        <div class="one-half column">
+          <select id="origin" name="origin" readonly>
+            <option value="Guatemala" selected>2023 Guatemalan Acopio</option>
+            <option value="Haiti" disabled>2023 Haitian PISA</option>
+            <option value="Uganda" disabled>
+              2023 Ugandan Semuliki Forest
+            </option>
+            <option value="Ecuador" disabled>2023 Ecuadoran CECAO</option>
+          </select>
+          <input
+            type="number"
+            id="rpm"
+            name="rpm"
+            placeholder="RPM"
+            min="0"
+            max="100"
+            oninput="validateNumber(this)"
+            required
+          />
+          <input
+            type="number"
+            id="temperature"
+            name="temperature"
+            placeholder="Temperature"
+            min="0"
+            max="100"
+            oninput="validateNumber(this)"
+          />
+          <input
+            type="number"
+            id="particleSize"
+            name="particleSize"
+            placeholder="Micron Size"
+            min="0"
+            max="100"
+            oninput="validateNumber(this)"
+          />
         </div>
-    </div>
-    <div class="container">
-        <div class="row">
+        <div class="one-half column">
+          <label for="notes"></label>
+          <textarea id="notes" name="notes" placeholder="Notes"></textarea>
+          <button type="button" onclick="logData()">Create Log Entry</button>
 
+          <!-- Remove this before release to production
+          <button type="button" onclick="clearEntries()" id="redButton">
+            CLEAR Log Entries
+          </button>
+					-->
         </div>
+      </form>
+      <div id="logEntries" style="display: none">
+        <div id="totalRuntime"></div>
+        <h3>Log Entries:</h3>
+        <div id="logContent"></div>
+      </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-		document.addEventListener('DOMContentLoaded', function () {
-			// Call calculateRefine when the DOM is fully loaded
-			calculateRefine();
-		});
-
-        var chart;
-
-        function updateSliderValue(inputId, sliderId) {
-            var inputValue = document.getElementById(inputId);
-            var sliderValue = document.getElementById(sliderId);
-            inputValue.value = sliderValue.value;
-
-            calculateRefine();
-        }
-
-        function calculateRefine() {
-            var nibsQuantity = parseFloat(document.getElementById("nibsQuantity").value);
-            var butterQuantity = parseFloat(document.getElementById("butterQuantity").value);
-            var sugarQuantity = parseFloat(document.getElementById("sugarQuantity").value);
-
-            // Perform the calculation
-            var batchWeight = nibsQuantity + butterQuantity + sugarQuantity;
-            var chocolateContent = ((nibsQuantity + butterQuantity) / batchWeight) * 100;
-            var sugarContent = (sugarQuantity / batchWeight) * 100;
-            var butterPercentage = (butterQuantity / batchWeight) * 100;
-
-            // Display the results
-            document.getElementById("batchResult").innerText = batchWeight.toFixed(2);
-            document.getElementById("butterPercentageResult").innerText = butterPercentage.toFixed(2);
-            document.getElementById("sugarContentResult").innerText = sugarContent.toFixed(2);
-            document.getElementById("chocolateContentResult").innerText = chocolateContent.toFixed(2);
-
-            updateChart(nibsQuantity, butterQuantity, sugarQuantity);
-        }
-
-        function updateChart(nibsQuantity, butterQuantity, sugarQuantity) {
-            if (!chart) {
-                var ctx = document.getElementById("contentsChart").getContext("2d");
-                chart = new Chart(ctx, {
-                    type: "pie",
-                    data: {
-                        labels: ["Nibs", "Butter", "Sugar"],
-                        datasets: [
-                            {
-                                data: [nibsQuantity, butterQuantity, sugarQuantity],
-                                backgroundColor: ["#b7410e", "#d69c00", "#e48400"],
-                            },
-                        ],
-					},
-                });
-            } else {
-                chart.data.datasets[0].data = [nibsQuantity, butterQuantity, sugarQuantity];
-                chart.update();
-            }
-        }
-    </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
