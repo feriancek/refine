@@ -219,4 +219,23 @@ function updateRuntime(firstEntryTime) {
   document.getElementById("totalRuntime").innerText = formattedRuntime;
 }
 
+function initializeNotesCharacterCounter(textareaId, counterId) {
+  const textarea = document.getElementById(textareaId);
+  const charCount = document.getElementById(counterId);
+  const maxLength = textarea.getAttribute('maxlength');
+
+  const updateCharCount = () => {
+    const currentLength = textarea.value.length;
+    charCount.textContent = `${maxLength - currentLength}`;
+  };
+
+  textarea.addEventListener('input', updateCharCount);
+
+  updateCharCount();
+}
+
 displayTotalRuntime();
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializeNotesCharacterCounter('notes', 'notesCharCount');
+});

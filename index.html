@@ -73,7 +73,9 @@
         </div>
         <div class="one-half column">
           <label for="notes"></label>
-          <textarea id="notes" name="notes" placeholder="Notes"></textarea>
+          <textarea id="notes" name="notes" placeholder="Notes" maxlength="1000"></textarea>
+          <div id="notesCharCount"></div>
+          <br />
           <button type="button" onclick="logData()">Create Log Entry</button>
 
           <!-- Remove this before release to production
